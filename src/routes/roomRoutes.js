@@ -43,10 +43,10 @@ router.post('/createRoom',auth,async(req,res)=>{
 
 router.get('/getRooms', auth, async (req, res) => {
     try {
-        // Fetch all rooms from the database
+        
         let rooms = await Room.find({});
         
-        // Send the rooms as a response with a 200 status code
+        
         res.status(200).json({
             success: true,
             rooms
@@ -54,7 +54,7 @@ router.get('/getRooms', auth, async (req, res) => {
     } catch (error) {
         console.error('Error fetching rooms:', error);
 
-        // Send a 500 status code if there's a server error
+        
         res.status(500).json({
             success: false,
             message: 'Server error, could not fetch rooms'
@@ -92,7 +92,7 @@ router.post('/joinRoom',auth,async(req,res)=>{
         room = await Room.findOneAndUpdate(
             { name: name },
             { $push: { users: users } },
-            { new: true } // Return the updated room
+            { new: true } 
         );
       
         res.status(201).json({

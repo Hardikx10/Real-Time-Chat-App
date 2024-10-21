@@ -6,7 +6,7 @@ const jwt=require('jsonwebtoken')
 const auth=require('../authMiddleware')
 const {User} = require('../models')
 
-// @access  Public
+
 router.post('/register', async (req, res) => {
     try {
       const { username, password } = req.body;
@@ -51,19 +51,19 @@ router.post('/register', async (req, res) => {
     try {
       const { username, password } = req.body;
   
-      // Check if user exists
+      
       const user = await User.findOne({ username });
       if (!user) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
   
-      // Validate password
+      
       const isMatch = await bcrypt.compare(password,user.password)
       if (!isMatch) {
         return res.status(400).json({ message: 'Invalid credentials' });
       }
   
-      // Create JWT token
+      
       const payload = {
         user: {
           id: user.id,

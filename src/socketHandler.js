@@ -30,7 +30,7 @@ const socketHandler = (io) => {
 
         socket.on('joinRoom', async ({ roomId, userId, username }) => {
             try {
-                // Leave previous room if exists
+               
                 const previousRoom = activeUsers.get(socket.id)?.roomId;
                 if (previousRoom) {
                     socket.leave(previousRoom);
@@ -38,14 +38,14 @@ const socketHandler = (io) => {
                     await broadcastRoomUsers(previousRoom);
                 }
 
-                // Join new room
+                
                 const room = await Room.findById(roomId);
                 if (!room) {
                     socket.emit('error', 'Room not found');
                     return;
                 }
 
-                // Update room users if needed
+                
                 if (!room.users.includes(userId)) {
                     await Room.findByIdAndUpdate(roomId, {
                         $addToSet: { users: userId }
@@ -100,7 +100,7 @@ const socketHandler = (io) => {
 
                 await newMessage.save();
 
-                // Broadcast to everyone in the room including sender
+                
                 io.to(roomId).emit('chatMessage', {
                     msgId: newMessage._id,
                     roomId,

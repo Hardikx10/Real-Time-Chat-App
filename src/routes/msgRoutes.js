@@ -34,7 +34,7 @@ router.post('/send',auth,async(req,res)=>{
     }
     
 })
-// Fetch messages for a specific room
+
 router.get('/:roomId', async (req, res) => {
     const { roomId } = req.params;
 
